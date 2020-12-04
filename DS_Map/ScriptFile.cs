@@ -9,18 +9,18 @@ using System.Linq;
 namespace DS_Map
 {
     /// <summary>
-    /// Class to store script file data in Pokémon NDS games
+    /// Class to store script file data in PokÃ©mon NDS games
     /// </summary>
     public class ScriptFile
 	{
-        #region Fields (3)
+        #regionÂ FieldsÂ (3)
         public List<Script> scripts = new List<Script>();
         public List<Script> functions = new List<Script>();
         public List<Script> movements = new List<Script>();
         public bool isLevelScript = new bool();
         #endregion
 
-        #region Constructors (1)
+        #regionÂ ConstructorsÂ (1)
         public ScriptFile(Stream fs, string version)
 		{
             List<uint> scriptOffsets = new List<uint>();
@@ -463,12 +463,12 @@ namespace DS_Map
     }
     public class Script
     {
-        #region Fields (1)
+        #regionÂ FieldsÂ (1)
         public List<Command> commands;
         public int useScript = -1;
-        #endregion Fields
+        #endregionÂ Fields
 
-        #region Constructors (2)
+        #regionÂ ConstructorsÂ (2)
         public Script(List<Command> commandsList)
         {
             commands = commandsList;
@@ -481,14 +481,14 @@ namespace DS_Map
     }
     public class Command
     {
-        #region Fields (4)
+        #regionÂ FieldsÂ (4)
         public ushort id;
         public List<byte[]> parameters;
         public string description;
         public bool isMovement;
         #endregion
 
-        #region Constructors (2)
+        #regionÂ ConstructorsÂ (2)
         public Command(ushort id, List<byte[]> parameters, string version, bool isMovement)
         {
             Dictionary<byte, string> operatorsDict = new Dictionary<byte, string>()
@@ -516,7 +516,15 @@ namespace DS_Map
             this.description = getCommandName.GetString(id.ToString("X4"));
             if (description == null) description = id.ToString("X4");
             this.isMovement = isMovement;
-
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                if (parameters[i].Length < 4)
+                {
+                    byte[] temp = new byte[4];
+                    parameters[i].CopyTo(temp, 0);
+                    parameters[i] = temp;
+                }
+            }
             switch (id)
             {
                 case 0x16:      // Jump
@@ -641,22 +649,22 @@ namespace DS_Map
                 ["CheckStoreItem"] = 0x007C,
                 ["CheckItem"] = 0x007D,
                 ["CheckUndergroundPCStatus"] = 0x0085,
-                ["CheckPokémonParty"] = 0x0093,
-                ["StorePokémonParty"] = 0x0094,
-                ["SetPokémonPartyStored"] = 0x0095,
-                ["GivePokémon"] = 0x0096,
+                ["CheckPokÃ©monParty"] = 0x0093,
+                ["StorePokÃ©monParty"] = 0x0094,
+                ["SetPokÃ©monPartyStored"] = 0x0095,
+                ["GivePokÃ©mon"] = 0x0096,
                 ["GiveEgg"] = 0x0097,
                 ["CheckMove"] = 0x0099,
                 ["CheckPlaceStored"] = 0x009A,
                 ["CallEnd"] = 0x00A1,
                 ["WFC"] = 0x00A3,
                 ["Interview"] = 0x00A5,
-                ["DressPokémon"] = 0x00A6,
-                ["DisplayDressedPokémon"] = 0x00A7,
-                ["DisplayContestPokémon"] = 0x00A8,
+                ["DressPokÃ©mon"] = 0x00A6,
+                ["DisplayDressedPokÃ©mon"] = 0x00A7,
+                ["DisplayContestPokÃ©mon"] = 0x00A8,
                 ["CapsuleEditor"] = 0x00A9,
                 ["SinnohMaps"] = 0x00AA,
-                ["BoxPokémon"] = 0x00AB,
+                ["BoxPokÃ©mon"] = 0x00AB,
                 ["DrawUnion"] = 0x00AC,
                 ["TrainerCaseUnion"] = 0x00AD,
                 ["TradeUnion"] = 0x00AE,
@@ -666,7 +674,7 @@ namespace DS_Map
                 ["WFC1"] = 0x00B3,
                 ["ChooseStarter"] = 0x00B4,
                 ["ChoosePlayerName"] = 0x00BA,
-                ["ChoosePokémonName"] = 0x00BB,
+                ["ChoosePokÃ©monName"] = 0x00BB,
                 ["FadeScreen"] = 0x00BC,
                 ["ResetScreen"] = 0x00BD,
                 ["Warp"] = 0x00BE,
@@ -682,7 +690,7 @@ namespace DS_Map
                 ["SetVariableHero"] = 0x00CD,
                 ["SetVariableRival"] = 0x00CE,
                 ["SetVariableAlter"] = 0x00CF,
-                ["SetVariablePokémon"] = 0x00D0,
+                ["SetVariablePokÃ©mon"] = 0x00D0,
                 ["SetVariableItem"] = 0x00D1,
                 ["SetVariableAttackItem"] = 0x00D3,
                 ["SetVariableAttack"] = 0x00D4,
@@ -690,7 +698,7 @@ namespace DS_Map
                 ["SetVariableNickname"] = 0x00D6,
                 ["SetVariableObject"] = 0x00D7,
                 ["SetVariableTrainer"] = 0x00D8,
-                ["SetVarPokémonStored"] = 0x00DA,
+                ["SetVarPokÃ©monStored"] = 0x00DA,
                 ["SetVarHeroStored"] = 0x00DB,
                 ["SetVarRivalStored"] = 0x00DC,
                 ["SetVarAlterStored"] = 0x00DD,
@@ -698,11 +706,11 @@ namespace DS_Map
                 ["TrainerBattle"] = 0x00E5,
                 ["EndTrainerBattle"] = 0x00E6,
                 ["ActLeagueBattlers"] = 0x00EA,
-                ["LostGoToPokémonCenter"] = 0x00EB,
+                ["LostGoToPokÃ©monCenter"] = 0x00EB,
                 ["CheckLost"] = 0x00EC,
                 ["ChooseFriend"] = 0x00F2,
                 ["WirelessBattleWait"] = 0x00F3,
-                ["PokémonContest"] = 0x00F7,
+                ["PokÃ©monContest"] = 0x00F7,
                 ["FlashContest"] = 0x0111,
                 ["EndFlash"] = 0x0112,
                 ["ShowLinkCountRecord"] = 0x0116,
@@ -716,19 +724,19 @@ namespace DS_Map
                 ["RandomBattle"] = 0x0129,
                 ["WriteAutograph"] = 0x012B,
                 ["CheckDress"] = 0x012E,
-                ["GivePokétch"] = 0x0131,
-                ["ActivatePokétchApp"] = 0x0133,
-                ["StorePokétchApp"] = 0x0134,
+                ["GivePokÃ©tch"] = 0x0131,
+                ["ActivatePokÃ©tchApp"] = 0x0133,
+                ["StorePokÃ©tchApp"] = 0x0134,
                 ["ExpectDecisionOther"] = 0x0143,
-                ["PokéMart"] = 0x0147,
-                ["PokéMart1"] = 0x0148,
-                ["PokéMart2"] = 0x0149,
-                ["PokéMart3"] = 0x014A,
-                ["DefeatGoToPokéCenter"] = 0x014B,
+                ["PokÃ©Mart"] = 0x0147,
+                ["PokÃ©Mart1"] = 0x0148,
+                ["PokÃ©Mart2"] = 0x0149,
+                ["PokÃ©Mart3"] = 0x014A,
+                ["DefeatGoToPokÃ©Center"] = 0x014B,
                 ["CheckGender"] = 0x014D,
-                ["HealPokémon"] = 0x014E,
+                ["HealPokÃ©mon"] = 0x014E,
                 ["UnionRoom"] = 0x0153,
-                ["ActivatePokédex"] = 0x0158,
+                ["ActivatePokÃ©dex"] = 0x0158,
                 ["GiveRunningShoes"] = 0x015A,
                 ["CheckBadge"] = 0x015B,
                 ["EnableBadge"] = 0x015C,
@@ -747,46 +755,46 @@ namespace DS_Map
                 ["SetDoorLocked"] = 0x018B,
                 ["ShowSavingClock"] = 0x018D,
                 ["HideSavingClock"] = 0x018E,
-                ["ChoosePokémonMenu"] = 0x0191,
-                ["ChoosePokémonMenu2"] = 0x0192,
-                ["StorePokémonMenu2"] = 0x0193,
-                ["PokémonInfo"] = 0x0195,
-                ["StorePokémonNumber"] = 0x0198,
+                ["ChoosePokÃ©monMenu"] = 0x0191,
+                ["ChoosePokÃ©monMenu2"] = 0x0192,
+                ["StorePokÃ©monMenu2"] = 0x0193,
+                ["PokÃ©monInfo"] = 0x0195,
+                ["StorePokÃ©monNumber"] = 0x0198,
                 ["CheckPartyNumber2"] = 0x019A,
                 ["EggAnimation"] = 0x01AC,
                 ["MailBox"] = 0x01B3,
                 ["RecordList"] = 0x01B5,
                 ["CheckHappiness"] = 0x01B9,
                 ["CheckPosition"] = 0x01BD,
-                ["CheckPokémonParty2"] = 0x01C0,
-                ["CopyPokémonHeight"] = 0x01C1,
-                ["SetVariablePokémonHeight"] = 0x01C2,
-                ["ComparePokémonHeight"] = 0x01C3,
-                ["CheckPokémonHeight"] = 0x01C4,
+                ["CheckPokÃ©monParty2"] = 0x01C0,
+                ["CopyPokÃ©monHeight"] = 0x01C1,
+                ["SetVariablePokÃ©monHeight"] = 0x01C2,
+                ["ComparePokÃ©monHeight"] = 0x01C3,
+                ["CheckPokÃ©monHeight"] = 0x01C4,
                 ["MoveInfo"] = 0x01C6,
                 ["StoreMove"] = 0x01C7,
                 ["DeleteMove"] = 0x01C9,
                 ["BerryPoffin"] = 0x01D7,
                 ["BattleRoomResult"] = 0x01D9,
-                ["CheckSinnohPokédex"] = 0x01E8,
-                ["CheckNationalPokédex"] = 0x01E9,
+                ["CheckSinnohPokÃ©dex"] = 0x01E8,
+                ["CheckNationalPokÃ©dex"] = 0x01E9,
                 ["ShowSinnohCertificate"] = 0x01EA,
                 ["ShowNationalCertificate"] = 0x01EB,
                 ["CheckFossil"] = 0x01F1,
-                ["CheckPokémonLevel"] = 0x01F6,
+                ["CheckPokÃ©monLevel"] = 0x01F6,
                 ["WarpLastElevator"] = 0x0204,
                 ["GeoNet"] = 0x0205,
                 ["GreatMarshBinoculars"] = 0x0206,
-                ["PokémonPicture"] = 0x0208,
+                ["PokÃ©monPicture"] = 0x0208,
                 ["HidePicture"] = 0x0209,
                 ["RememberMove"] = 0x0221,
                 ["TeachMove"] = 0x0224,
                 ["CheckTeachMove"] = 0x0225,
-                ["CheckPokémonTrade"] = 0x0228,
-                ["TradeChosenPokémon"] = 0x0229,
+                ["CheckPokÃ©monTrade"] = 0x0228,
+                ["TradeChosenPokÃ©mon"] = 0x0229,
                 ["StopTrade"] = 0x022A,
                 ["DecideRules"] = 0x0239,
-                ["HealPokémonAnimation"] = 0x023B,
+                ["HealPokÃ©monAnimation"] = 0x023B,
                 ["ShipAnimation"] = 0x023D,
                 ["PhraseBox1W"] = 0x0243,
                 ["PhraseBox2W"] = 0x0244,
@@ -801,11 +809,11 @@ namespace DS_Map
                 ["RetSprtSave"] = 0x0258,
                 ["ElevLgAnimation"] = 0x0259,
                 ["CheckAccessories"] = 0x0261,
-                ["PokéCasino"] = 0x0267,
+                ["PokÃ©Casino"] = 0x0267,
                 ["UnownMessageBox"] = 0x026D,
                 ["ThankNameInsert"] = 0x0271,
                 ["LeagueCastleView"] = 0x027A,
-                ["PokémonPartyPicture"] = 0x028C,
+                ["PokÃ©monPartyPicture"] = 0x028C,
                 ["CheckFirstTimeChampion"] = 0x028F,
                 ["ShowBattlePointsBox"] = 0x0294,
                 ["HideBattlePointsBox"] = 0x0295,
@@ -814,7 +822,7 @@ namespace DS_Map
                 ["CameraBumpEffect"] = 0x029F,
                 ["DoubleBattle"] = 0x02A0,
                 ["ApplyMovement2"] = 0x02A1,
-                ["ChooseTradePokémon"] = 0x02A5,
+                ["ChooseTradePokÃ©mon"] = 0x02A5,
                 ["ComparePhraseBoxInput"] = 0x02AA,
                 ["ActivateMysteryGift"] = 0x02AC,
                 ["CheckWildBattle2"] = 0x02BC,
